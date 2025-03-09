@@ -174,5 +174,5 @@ MIT License
 
 ## 问题反馈
 
-如有问题，请提交issue或联系：
+如有问题，请提交issue：
 - GitHub Issues: [issues page](https://github.com/Nu1l-Laputa-II/libraryManagementSystem/issues)
