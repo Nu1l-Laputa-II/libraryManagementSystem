@@ -111,13 +111,16 @@ make
 
 ```
 libraryManagementSystem/
-├── main.c              # 主程序
-├── structures.h        # 数据结构定义
-├── book_management.h   # 图书管理模块头文件
-├── book_management.c   # 图书管理模块实现
-├── reader_management.h # 读者管理模块头文件
-├── reader_management.c # 读者管理模块实现
-├── Makefile           # 构建配置
+├── codes/
+|   ├── main.c              # 主程序
+|   ├── structures.h        # 数据结构定义
+|   ├── book_management.h   # 图书管理模块头文件
+|   ├── book_management.c   # 图书管理模块实现
+|   ├── reader_management.h # 读者管理模块头文件
+|   └── reader_management.c # 读者管理模块实现
+├── doc/             # 项目文档目录
+|    ├── design.md   # 设计框架文件
+|    └── api.md      # 接口设计文件
 ├── README.md          # 项目说明文档
 └── data/              # 数据文件目录
     ├── books.dat      # 图书数据文件
