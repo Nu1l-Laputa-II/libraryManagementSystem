@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
+#include <windows.h>
 #include "structures.h"
 #include "book_management.h"
 #include "reader_management.h"
@@ -25,6 +27,18 @@ void showMenu() {
     printf("9. 还书\n");
     printf("0. 退出\n");
     printf("请选择操作: ");
+}
+
+// 清理输入缓冲区
+void clearInputBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+// 安全输入字符串
+void safeInputString(char *buffer, int maxSize) {
+    fgets(buffer, maxSize, stdin);
+    buffer[strcspn(buffer, "\n")] = 0;  // 移除换行符
 }
 
 // 图书借阅功能
@@ -95,6 +109,14 @@ void returnBook() {
 
 // 主函数
 int main() {
+    // 设置代码页和控制台编码
+    system("chcp 65001");  // 设置控制台代码页为UTF-8
+    SetConsoleOutputCP(65001);
+    SetConsoleCP(65001);
+    
+    // 设置区域
+    setlocale(LC_ALL, ".UTF8");
+    
     // 初始化：从文件加载数据
     loadBooks(books, &book_count);
     loadReaders(readers, &reader_count);
@@ -108,18 +130,20 @@ int main() {
     while (1) {
         showMenu();
         scanf("%d", &choice);
+        clearInputBuffer();  // 清理输入缓冲区
         
         // 根据用户选择执行相应操作
         switch (choice) {
             case 1:  // 添加图书
                 printf("请输入ISBN: ");
-                scanf("%s", new_book.isbn);
+                safeInputString(new_book.isbn, MAX_ISBN_LEN);
                 printf("请输入书名: ");
-                scanf("%s", new_book.title);
+                safeInputString(new_book.title, MAX_NAME_LEN);
                 printf("请输入作者: ");
-                scanf("%s", new_book.author);
+                safeInputString(new_book.author, MAX_NAME_LEN);
                 printf("请输入数量: ");
                 scanf("%d", &new_book.total_count);
+                clearInputBuffer();
                 new_book.available_count = new_book.total_count;
                 if (addBook(books, &book_count, new_book))
                     printf("添加成功!\n");
@@ -153,10 +177,11 @@ int main() {
             case 5:  // 添加读者
                 printf("请输入读者ID: ");
                 scanf("%d", &new_reader.id);
+                clearInputBuffer();
                 printf("请输入姓名: ");
-                scanf("%s", new_reader.name);
+                safeInputString(new_reader.name, MAX_NAME_LEN);
                 printf("请输入电话: ");
-                scanf("%s", new_reader.phone);
+                safeInputString(new_reader.phone, 20);
                 new_reader.borrowed_count = 0;
                 if (addReader(readers, &reader_count, new_reader))
                     printf("添加成功!\n");

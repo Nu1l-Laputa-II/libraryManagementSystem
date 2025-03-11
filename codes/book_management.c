@@ -42,15 +42,19 @@ Book* findBook(Book *books, int book_count, const char *isbn) {
 
 void listAllBooks(Book *books, int book_count) {
     printf("\n图书列表:\n");
-    printf("%-20s %-30s %-20s %-10s %-10s\n", "ISBN", "书名", "作者", "总数量", "可借数量");
+    const char* header_format = "%-20s %-30s %-20s %-10s %-10s\n";
+    const char* data_format = "%-20s %-30s %-20s %-10d %-10d\n";
+    printf(header_format, "ISBN", "书名", "作者", "总数量", "可借数量");
+    printf("--------------------------------------------------------------------------------\n");
     for (int i = 0; i < book_count; i++) {
-        printf("%-20s %-30s %-20s %-10d %-10d\n",
+        printf(data_format,
                books[i].isbn,
                books[i].title,
                books[i].author,
                books[i].total_count,
                books[i].available_count);
     }
+    printf("--------------------------------------------------------------------------------\n");
 }
 
 int saveBooks(Book *books, int book_count) {

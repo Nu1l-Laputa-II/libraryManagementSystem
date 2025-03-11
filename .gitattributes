@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Ignore exes directory
+exes/* binary
+exes/ export-ignore
